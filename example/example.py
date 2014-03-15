@@ -26,8 +26,7 @@ frame_empty = pyv.Item(
     topleft=(85, 185),
     name='Frame',
     description='An empty frame.',
-    take_allow=False,
-    manipulate_allow=False)
+    take_allow=False)
 
 frame_with_circle = pyv.Item(
     image=join('img', 'frame_with_circle.png'),
@@ -46,9 +45,7 @@ black_thingy = pyv.Item(
     image=join('img', 'black_thingy.png'),
     topleft=(100, 400),
     name='Black thing',
-    description='A mysterious black thing.',
-    manipulate_allow=False,
-    manipulate_attempt="I don't know what to do with this.")
+    description='A mysterious black thing.')
 
 def use_item_callback(room, this, other):
     pyv.inventory.remove_item(this)
@@ -61,8 +58,6 @@ red_circle = pyv.Item(
     topleft=(400, 450),
     name='Red circle',
     description='A red circle. It looks pretty.',
-    manipulate_allow=False,
-    manipulate_attempt="I don't know what to do with this.",
     use_item_callbacks=[(frame_empty, use_item_callback)])
 
 bird = pyv.Item(
@@ -78,8 +73,7 @@ door_closed = pyv.Item(
     topleft=(246, 278),
     name='Door',
     description='The door is closed.',
-    take_allow=False,
-    manipulate_allow=True)
+    take_allow=False)
 
 door_open = pyv.Item(
     image=join('img', 'door_open.png'),

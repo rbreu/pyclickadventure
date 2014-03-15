@@ -11,6 +11,7 @@ ENTER_LABEL = 'Enter'
 USE_ITEM_LABEL = 'Use item with...'
 USE_ITEM_HELP_MESSAGE = 'Select an item from the screen.'
 USE_ITEM_NOSUCCESS_MESSAGE = "I don't know how to do this."
+MANIPULATE_MESSAGE = "I don't know what to do with this."
 
 screen = None
 resolution = None
@@ -66,7 +67,7 @@ class Item(pygame.sprite.Sprite, HoverMessageMixin):
 
     def __init__(self, image, topleft, name, description,
                  take_allow=True, take_attempt=None,
-                 manipulate_allow=False, manipulate_attempt=None,
+                 manipulate_allow=True,
                  enter=None, use_item_callbacks=None):
         super(Item, self).__init__()
         self.name = name
@@ -78,7 +79,6 @@ class Item(pygame.sprite.Sprite, HoverMessageMixin):
         self.take_allow = take_allow
         self.take_attempt = take_attempt
         self.manipulate_allow = manipulate_allow
-        self.manipulate_attempt = manipulate_attempt
         self.enter = enter
         self.use_item_callbacks = use_item_callbacks or []
 
@@ -101,10 +101,7 @@ class Item(pygame.sprite.Sprite, HoverMessageMixin):
             room.status_message = self.take_attempt
 
     def manipulate_callback(self, room):
-        if self.manipulate_allow:
-            pass
-        elif self.manipulate_attempt:
-            room.status_message = self.manipulate_attempt
+        room.status_message = MANIPULATE_MESSAGE
 
     def use_with(self, room, item):
         for it, callback in self.use_item_callbacks:
@@ -118,7 +115,7 @@ class Item(pygame.sprite.Sprite, HoverMessageMixin):
         entries = []
         if self.description:
             entries.append((VIEW_LABEL, self.view_callback))
-        if self.manipulate_allow or self.manipulate_attempt:
+        if self.manipulate_allow:
                 entries.append((MANIPULATE_LABEL, self.manipulate_callback))
         if self in room:
             if self.take_allow or self.take_attempt:
